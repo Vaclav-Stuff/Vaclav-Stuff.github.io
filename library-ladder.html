@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Ladder Project Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf6ef;
+    --accent: #8b6914;
+    --warm: #c8872a;
+    --rule: #d4c9b0;
+    --highlight: #fdfaf5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,135,42,0.15) 0%, transparent 70%);
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--warm);
+  }
+  .subtitle {
+    font-size: 16px;
+    color: rgba(250,246,239,0.5);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  nav {
+    background: rgba(26, 18, 8, 0.95);
+    padding: 12px 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--warm);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 100px;
+  }
+
+  section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin: 32px 0 12px;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 16px; font-size: 15.5px; color: rgba(26, 18, 8, 0.85); }
+
+  ul { margin-bottom: 20px; padding-left: 20px; }
+  li { margin-bottom: 8px; font-size: 15px; }
+
+  /* MEASUREMENTS BOX */
+  .meas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .meas-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .meas-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .meas-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  /* SUPPLIER CARDS */
+  .supplier-list {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .supplier-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 24px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+  }
+  .supplier-card:hover { border-color: var(--accent); background: var(--highlight); }
+  .sup-info h4 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 4px; }
+  .sup-info p { font-size: 13px; margin: 0; color: rgba(26, 18, 8, 0.6); }
+  .sup-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .sup-link:hover { background: var(--accent); color: white; }
+
+  /* BUDGET LIST */
+  .budget-list {
+    background: var(--highlight);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+  .budget-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .budget-item:last-child { border-bottom: none; }
+  .budget-val { font-weight: 600; font-family: 'Playfair Display', serif; }
+
+  /* TASK LIST */
+  .tasks {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .tasks li {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background: white;
+    padding: 16px 20px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .check-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--rule);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 40px 20px; }
+    .container { padding: 24px 16px; }
+    .supplier-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Interior Planning</div>
+  <h1>Library <em>Ladder</em> Project</h1>
+  <p class="subtitle">Bespoke built-in bookshelf ladder — Planning & Research</p>
+</header>
+
+<nav>
+  <a href="./">← Home</a>
+</nav>
+
+<div class="container">
+
+  <section>
+    <div class="section-label">Overview</div>
+    <h2>The Concept</h2>
+    <p>Researching and planning the addition of a rolling library ladder to our bespoke built-in bookshelf unit in the living room. The project aims to combine visual flair with practical access to the top shelves.</p>
+    
+    <div class="meas-grid">
+      <div class="meas-card">
+        <div class="meas-label">Ceiling Height</div>
+        <div class="meas-value">2.7m</div>
+      </div>
+      <div class="meas-card">
+        <div class="meas-label">Est. Ladder length</div>
+        <div class="meas-value">2.4m</div>
+      </div>
+      <div class="meas-card">
+        <div class="meas-label">Hardware Type</div>
+        <div class="meas-value">Rolling</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Design Details</div>
+    <h2>Key Considerations</h2>
+    <ul>
+      <li><strong>Rail Mounting:</strong> To be mounted at the very top of the unit, spanning full width.</li>
+      <li><strong>Clearance:</strong> Top section is recessed — rail position needs careful measuring to clear lower shelf fronts as the ladder swings.</li>
+      <li><strong>Home Position:</strong> Left or right column to keep the TV area clear when not in use.</li>
+      <li><strong>Recommended Finish:</strong> Dark matte black or dark bronze hardware — complements the sage green paint beautifully.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Suppliers</div>
+    <h2>Recommended Suppliers</h2>
+    <div class="supplier-list">
+      <div class="supplier-card">
+        <div class="sup-info">
+          <h4>LLCompany ⭐ Recommended</h4>
+          <p>Best middle-ground option. Quality UK stock, bespoke sizing.</p>
+        </div>
+        <a href="http://llcompany.co.uk" class="sup-link">Visit Site</a>
+      </div>
+      <div class="supplier-card">
+        <div class="sup-info">
+          <h4>Andrew Nebbett Designs</h4>
+          <p>Premium end — fully bespoke, handmade, interior designer level.</p>
+        </div>
+        <a href="http://andrewnebbettdesigns.co.uk" class="sup-link">Visit Site</a>
+      </div>
+      <div class="supplier-card">
+        <div class="sup-info">
+          <h4>Ladderstore</h4>
+          <p>Affordable, UK-manufactured, more DIY-friendly.</p>
+        </div>
+        <a href="http://ladderstore.com" class="sup-link">Visit Site</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Financials</div>
+    <h2>Budget Estimates</h2>
+    <div class="budget-list">
+      <div class="budget-item">
+        <span>Kit ladder system (LLCompany)</span>
+        <span class="budget-val">£300 – £600</span>
+      </div>
+      <div class="budget-item">
+        <span>Premium Bespoke (Andrew Nebbett)</span>
+        <span class="budget-val">£1,500 – £3,000+</span>
+      </div>
+      <div class="budget-item">
+        <span>Joiner installation (estimated)</span>
+        <span class="budget-val">TBC</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Next Steps</div>
+    <h2>To-Do List</h2>
+    <ul class="tasks">
+      <li><div class="check-circle"></div> Measure exact rail width needed (full bookcase width)</li>
+      <li><div class="check-circle"></div> Confirm floor-to-rail height with joiner before ordering</li>
+      <li><div class="check-circle"></div> Contact original joiner to discuss feasibility</li>
+      <li><div class="check-circle"></div> Request a quote from LLCompany</li>
+      <li><div class="check-circle"></div> Decide on timber and finish (Matte Black rail)</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  Vaclav's Stuff — Library Ladder Project
+</footer>
+
+</body>
+</html>

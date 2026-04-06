@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Courtyard Garden — Tools Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a241a;
+    --paper: #f7f9f5;
+    --accent: #3d6b45;
+    --warm: #7d8b5b;
+    --rule: #d5dbd0;
+    --highlight: #f0f4ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,107,69,0.3) 0%, transparent 70%);
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  header h1 em {
+    font-style: italic;
+    color: #a8b894;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: rgba(247,249,245,0.6);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  nav {
+    background: rgba(26, 36, 26, 0.95);
+    padding: 12px 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--warm);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 100px;
+  }
+
+  section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin: 32px 0 12px;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 16px; font-size: 15.5px; color: rgba(26, 36, 26, 0.8); }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .checklist li {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14.5px;
+    transition: all 0.2s ease;
+  }
+  .checklist li:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(61,107,69,0.05);
+  }
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--rule);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  li:hover .check-box { border-color: var(--accent); }
+
+  /* TOOL CARDS */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .tool-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .tool-card:hover { transform: translateY(-4px); }
+  .tool-img-wrap {
+    height: 180px;
+    overflow: hidden;
+    background: #eee;
+  }
+  .tool-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+  }
+  .tool-content {
+    padding: 24px;
+  }
+  .tool-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .tool-content p {
+    font-size: 13.5px;
+    margin: 0;
+    color: rgba(26, 36, 26, 0.6);
+    line-height: 1.5;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 24px;
+    border-radius: 0 12px 12px 0;
+    margin: 32px 0;
+  }
+  .callout strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .callout p { margin: 0; font-size: 14px; }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--warm);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 40px 20px; }
+    .container { padding: 24px 16px; }
+    .tool-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Seasonal Maintenance</div>
+  <h1>Mini Courtyard <em>Garden</em></h1>
+  <p class="subtitle">A handy checklist for tending to your 3×3 front courtyard garden.</p>
+</header>
+
+<nav>
+  <a href="./">← Home</a>
+</nav>
+
+<div class="container">
+
+  <section>
+    <div class="section-label">Section 01</div>
+    <h2>For Clearing Up</h2>
+    <p>Everything you need to clear the leaf litter and tidy the edges.</p>
+    
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Garden_rake.jpg/320px-Garden_rake.jpg" alt="Leaf Rake">
+        </div>
+        <div class="tool-content">
+          <h4>Leaf Rake</h4>
+          <p>Essential for gathering fallen camellia petals and dead leaves on the left side.</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Trowel.JPG/320px-Trowel.JPG" alt="Hand Trowel">
+        </div>
+        <div class="tool-content">
+          <h4>Hand Trowel</h4>
+          <p>For weeding between gravel where weeds are poking through.</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Kneeling_mat.jpg/320px-Kneeling_mat.jpg" alt="Kneeling Pad">
+        </div>
+        <div class="tool-content">
+          <h4>Kneeling Pad</h4>
+          <p>Protect your knees from the rough gravel during close-up weeding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Section 02</div>
+    <h2>The Gravel & Planter</h2>
+    <p>Maintaining the structural elements of the courtyard.</p>
+
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ascia_zappa.jpg/320px-Ascia_zappa.jpg" alt="Gravel Rake">
+        </div>
+        <div class="tool-content">
+          <h4>Stiff Rake</h4>
+          <p>To redistribute and tidy up the gravel — keeping it level and neat.</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pruning-shears-8250.jpg/320px-Pruning-shears-8250.jpg" alt="Secateurs">
+        </div>
+        <div class="tool-content">
+          <h4>Secateurs</h4>
+          <p>Trim back the dried grass clump in the central planter box.</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-img-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Watering_can.jpg/320px-Watering_can.jpg" alt="Watering Can">
+        </div>
+        <div class="tool-content">
+          <h4>Watering Can</h4>
+          <p>For the potted plants clustered near the brick wall.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Summary</div>
+    <h2>Full Checklist</h2>
+    <ul class="checklist">
+      <li><div class="check-box"></div> Leaf rake</li>
+      <li><div class="check-box"></div> Hand trowel</li>
+      <li><div class="check-box"></div> Kneeling pad</li>
+      <li><div class="check-box"></div> Garden gloves</li>
+      <li><div class="check-box"></div> Garden bag / bucket</li>
+      <li><div class="check-box"></div> Stiff-bristled rake</li>
+      <li><div class="check-box"></div> Hand fork</li>
+      <li><div class="check-box"></div> Secateurs</li>
+      <li><div class="check-box"></div> Watering can</li>
+    </ul>
+
+    <div class="callout">
+      <strong>💡 Expert Tip</strong>
+      <p>Since it's a compact 3×3 space, all hand tools will do the job perfectly — no need for large, heavy-duty equipment.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Vaclav's Stuff — Gardening Guide
+</footer>
+
+</body>
+</html>
