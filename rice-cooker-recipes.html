@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rice Cooker Recipes — Xiaomi MFB05M</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6EF;
+    --warm-white: #FFF9F2;
+    --ink: #1A1208;
+    --amber: #C8872A;
+    --amber-light: #F0C070;
+    --mode-rice: #C8872A;
+    --mode-quick: #B5451B;
+    --mode-congee: #3D6B45;
+    --mode-stew: #2A4B7C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  header { background: var(--ink); padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(200,135,42,0.25) 0%, transparent 70%); }
+  header::after { content: ''; position: absolute; bottom: -40px; left: 30%; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(61,107,69,0.2) 0%, transparent 70%); }
+  .header-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-light); margin-bottom: 0.5rem; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--cream); line-height: 1.15; margin-bottom: 0.4rem; }
+  header h1 em { font-style: italic; color: var(--amber-light); }
+  .header-sub { font-size: 0.8rem; color: rgba(250,246,239,0.5); letter-spacing: 0.05em; }
+
+  .filter-bar { padding: 1.2rem 1.5rem; background: var(--warm-white); border-bottom: 1px solid rgba(92,61,30,0.1); position: sticky; top: 0; z-index: 10; display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; padding: 0.45rem 1rem; border-radius: 999px; border: 1.5px solid transparent; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; background: transparent; letter-spacing: 0.03em; }
+  .filter-btn.all { border-color: var(--ink); color: var(--ink); }
+  .filter-btn.all.active, .filter-btn.all:hover { background: var(--ink); color: var(--cream); }
+  .filter-btn.rice { border-color: var(--mode-rice); color: var(--mode-rice); }
+  .filter-btn.rice.active, .filter-btn.rice:hover { background: var(--mode-rice); color: white; }
+  .filter-btn.quick { border-color: var(--mode-quick); color: var(--mode-quick); }
+  .filter-btn.quick.active, .filter-btn.quick:hover { background: var(--mode-quick); color: white; }
+  .filter-btn.congee { border-color: var(--mode-congee); color: var(--mode-congee); }
+  .filter-btn.congee.active, .filter-btn.congee:hover { background: var(--mode-congee); color: white; }
+  .filter-btn.stew { border-color: var(--mode-stew); color: var(--mode-stew); }
+  .filter-btn.stew.active, .filter-btn.stew:hover { background: var(--mode-stew); color: white; }
+
+  .recipe-count { padding: 0.8rem 1.5rem 0; font-size: 0.72rem; color: rgba(26,18,8,0.35); letter-spacing: 0.05em; }
+  .grid { padding: 1rem 1.5rem 1.5rem; display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+
+  .card { background: var(--warm-white); border-radius: 16px; overflow: hidden; border: 1px solid rgba(92,61,30,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,18,8,0.1); }
+  .card.hidden { display: none; }
+
+  .card-top { padding: 1.2rem 1.2rem 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .mode-badge { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; padding: 0.25rem 0.65rem; border-radius: 999px; color: white; }
+  .badge-rice { background: var(--mode-rice); }
+  .badge-quick { background: var(--mode-quick); }
+  .badge-congee { background: var(--mode-congee); }
+  .badge-stew { background: var(--mode-stew); }
+  .card-emoji { font-size: 1.8rem; line-height: 1; }
+
+  .card-body { padding: 0.75rem 1.2rem 1rem; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem; line-height: 1.3; }
+  .card-desc { font-size: 0.8rem; color: rgba(26,18,8,0.55); margin-bottom: 0.9rem; line-height: 1.5; }
+  .card-meta { display: flex; gap: 1rem; font-size: 0.72rem; color: rgba(26,18,8,0.45); margin-bottom: 1rem; }
+  .meta-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; display: inline-block; margin-right: 0.3rem; }
+
+  /* NUTRITION BAR */
+  .nutrition-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--cream);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.9rem;
+    border: 1px solid rgba(26,18,8,0.06);
+  }
+  .nutr-cell {
+    padding: 0.5rem 0.3rem;
+    text-align: center;
+    border-right: 1px solid rgba(26,18,8,0.06);
+  }
+  .nutr-cell:last-child { border-right: none; }
+  .nutr-value { font-size: 0.82rem; font-weight: 500; color: var(--ink); display: block; line-height: 1.2; }
+  .nutr-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(26,18,8,0.35); display: block; margin-top: 0.1rem; }
+  .nutr-cell.kcal .nutr-value { color: var(--amber); }
+
+  .servings-row { display: flex; align-items: center; justify-content: space-between; background: var(--cream); border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.9rem; }
+  .servings-label { font-size: 0.75rem; color: rgba(26,18,8,0.5); }
+  .servings-control { display: flex; align-items: center; gap: 0.6rem; }
+  .srv-btn { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid rgba(26,18,8,0.2); background: white; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; color: var(--ink); transition: all 0.15s; }
+  .srv-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .srv-count { font-size: 0.9rem; font-weight: 500; min-width: 20px; text-align: center; }
+
+  .ingredients-title { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,18,8,0.4); margin-bottom: 0.5rem; font-weight: 500; }
+  .ingredients-list { list-style: none; }
+  .ingredients-list li { font-size: 0.82rem; padding: 0.3rem 0; border-bottom: 1px solid rgba(26,18,8,0.06); display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  .ingredients-list li:last-child { border-bottom: none; }
+  .ing-name { color: rgba(26,18,8,0.7); }
+  .ing-amount { font-weight: 500; color: var(--ink); white-space: nowrap; }
+
+  .expand-btn { width: 100%; padding: 0.65rem; background: none; border: none; border-top: 1px solid rgba(26,18,8,0.07); font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: rgba(26,18,8,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: color 0.2s; letter-spacing: 0.05em; }
+  .expand-btn:hover { color: var(--amber); }
+  .expand-icon { transition: transform 0.2s; font-size: 0.65rem; }
+  .card.expanded .expand-icon { transform: rotate(180deg); }
+  .collapsible { display: none; padding: 0 1.2rem 1rem; }
+  .card.expanded .collapsible { display: block; }
+
+  .steps-title { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,18,8,0.4); margin: 0.8rem 0 0.5rem; font-weight: 500; }
+  .steps-list { list-style: none; counter-reset: steps; }
+  .steps-list li { counter-increment: steps; font-size: 0.82rem; line-height: 1.55; padding: 0.4rem 0 0.4rem 2rem; border-bottom: 1px solid rgba(26,18,8,0.06); position: relative; color: rgba(26,18,8,0.75); }
+  .steps-list li:last-child { border-bottom: none; }
+  .steps-list li::before { content: counter(steps); position: absolute; left: 0; top: 0.4rem; width: 18px; height: 18px; border-radius: 50%; background: var(--amber); color: white; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; }
+
+  .tip-box { margin-top: 0.8rem; padding: 0.65rem 0.8rem; background: rgba(200,135,42,0.08); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; font-size: 0.78rem; color: rgba(26,18,8,0.65); line-height: 1.5; }
+  .tip-box strong { color: var(--amber); font-weight: 500; }
+  .nutr-note { font-size: 0.68rem; color: rgba(26,18,8,0.3); text-align: center; margin-top: 0.5rem; font-style: italic; }
+
+  footer { text-align: center; padding: 2rem 1.5rem; font-size: 0.72rem; color: rgba(26,18,8,0.3); border-top: 1px solid rgba(26,18,8,0.07); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Xiaomi MFB05M · 1.5L</div>
+  <h1>Rice Cooker<br><em>Recipe Book</em></h1>
+  <div class="header-sub" id="header-count">4 cooking modes · scalable servings</div>
+</header>
+
+<nav style="background:rgba(26,18,8,0.92);padding:0.5rem 1.5rem;">
+  <a href="./" style="color:var(--amber-light);text-decoration:none;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.05em;">← Home</a>
+</nav>
+
+<div class="filter-bar">
+  <button class="filter-btn all active" onclick="filter('all',this)">All Recipes</button>
+  <button class="filter-btn rice" onclick="filter('rice',this)">🟡 Rice</button>
+  <button class="filter-btn quick" onclick="filter('quick',this)">🔴 Quick Rice</button>
+  <button class="filter-btn congee" onclick="filter('congee',this)">🟢 Congee</button>
+  <button class="filter-btn stew" onclick="filter('stew',this)">🔵 Stew</button>
+</div>
+
+<div class="recipe-count" id="recipe-count"></div>
+<div class="grid" id="grid"></div>
+
+<footer>Recipes calibrated for Xiaomi MFB05M · Max ~555 g rice · Serves 1–3</footer>
+
+<script>
+// nutrition: { kcal, protein(g), carbs(g), fat(g), fibre(g) } — all per BASE serving
+// Values calculated from standard ingredient data (USDA / EU food tables), approximate.
+
+const recipes = [
+  // ─── RICE ───────────────────────────────────────────────
+  { id:1, mode:'rice', emoji:'🍚', title:'Garlic Butter Rice', desc:'Fragrant jasmine rice cooked with garlic and a knob of butter — simple perfection.', time:'~35 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:320, protein:6, carbs:60, fat:7, fibre:1 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:185},{name:'Water',unit:'ml',base:300},{name:'Butter',unit:'g',base:15},{name:'Garlic cloves (minced)',unit:'',base:2},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse rice until water runs clear, then drain.','Add rice, water, minced garlic, salt and butter to the pot.','Select Rice mode and press Start.','Fluff gently and rest 5 min on Keep Warm before serving.'],
+    tip:'Swap water for chicken or vegetable stock for extra depth.' },
+
+  { id:2, mode:'rice', emoji:'🍗', title:'Hainanese Chicken Rice', desc:'A Southeast Asian classic — rice cooked in chicken-infused broth with tender poached chicken on top.', time:'~40 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:520, protein:38, carbs:58, fat:12, fibre:1 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:185},{name:'Chicken broth',unit:'ml',base:300},{name:'Chicken thighs (boneless)',unit:'g',base:250},{name:'Sesame oil',unit:'ml',base:5},{name:'Fresh ginger slices',unit:'g',base:10},{name:'Soy sauce',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse rice and place in the inner pot.','Pour chicken broth over rice. Add ginger, sesame oil and salt.','Lay chicken thighs on top — do not stir.','Select Rice mode and press Start.','Slice chicken, drizzle soy sauce, and serve over the rice.'],
+    tip:'The chicken cooks by steam — slice to confirm it is fully white through before serving.' },
+
+  { id:3, mode:'rice', emoji:'🍣', title:'Sushi Rice', desc:'Perfectly seasoned Japanese short-grain rice, ready for rolls, bowls, or onigiri.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:310, protein:6, carbs:68, fat:1, fibre:1 },
+    ingredients:[{name:'Japanese short-grain rice',unit:'g',base:200},{name:'Water',unit:'ml',base:260},{name:'Rice vinegar',unit:'ml',base:25},{name:'Sugar',unit:'g',base:8},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse rice at least 3 times until water is mostly clear.','Add rice and water to pot. Select Rice mode.','Mix rice vinegar, sugar and salt until dissolved.','When done, transfer to a bowl and fold in the vinegar mix while fanning to cool.','Use immediately or cover with a damp cloth.'],
+    tip:'Do not refrigerate sushi rice — it hardens. Use within 2 hours.' },
+
+  { id:4, mode:'rice', emoji:'🌿', title:'Brown Rice & Herbs', desc:'Nutty brown rice with fresh herbs and lemon zest — wholesome base for any meal.', time:'~55 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:310, protein:6, carbs:56, fat:8, fibre:4 },
+    ingredients:[{name:'Brown rice',unit:'g',base:190},{name:'Water',unit:'ml',base:360},{name:'Olive oil',unit:'ml',base:15},{name:'Fresh parsley (chopped)',unit:'g',base:10},{name:'Lemon zest',unit:'g',base:3},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse brown rice and soak 20 min in cold water (optional but improves texture).','Drain and add to pot with water, olive oil and salt.','Select Rice mode and press Start.','Rest 10 min on Keep Warm after the cycle.','Stir in parsley and lemon zest before serving.'],
+    tip:'Brown rice needs more water and time than white rice — never substitute the ratios.' },
+
+  { id:5, mode:'rice', emoji:'🥕', title:'Vegetable Pilaf', desc:'One-pot fragrant basmati with peas, carrots and warm spices.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:360, protein:8, carbs:66, fat:7, fibre:4 },
+    ingredients:[{name:'Basmati rice',unit:'g',base:185},{name:'Water or broth',unit:'ml',base:360},{name:'Frozen peas',unit:'g',base:50},{name:'Carrot (diced small)',unit:'g',base:60},{name:'Ground cumin',unit:'g',base:2},{name:'Turmeric',unit:'g',base:1},{name:'Salt',unit:'g',base:3},{name:'Butter',unit:'g',base:10}],
+    steps:['Rinse basmati rice and drain.','Add all ingredients to the inner pot and stir gently.','Select Rice mode and press Start.','Fluff with paddle when done and serve hot.'],
+    tip:'Add a cinnamon stick or two cardamom pods for extra warmth.' },
+
+  { id:6, mode:'rice', emoji:'🇰🇷', title:'Korean Sesame Rice (Nurungji-style)', desc:'Sesame-scented rice left to develop a lightly toasted bottom — the best part of Korean bibimbap.', time:'~45 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:330, protein:6, carbs:60, fat:7, fibre:1 },
+    ingredients:[{name:'Short-grain white rice',unit:'g',base:200},{name:'Water',unit:'ml',base:280},{name:'Sesame oil',unit:'ml',base:10},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse rice and add to pot with water and salt.','Select Rice mode.','After the cycle, drizzle sesame oil around the edge and keep on Keep Warm 10 min to develop a light crust.','Serve topped with sautéed vegetables, a fried egg, and gochujang.'],
+    tip:'The lightly toasted bottom layer — nurungji — is the best part. Do not skip the extra rest time.' },
+
+  { id:7, mode:'rice', emoji:'🇹🇭', title:'Thai Coconut Rice', desc:'Lightly sweet, silky rice cooked in coconut milk — perfect with curries and grilled meats.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:430, protein:7, carbs:63, fat:17, fibre:2 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:185},{name:'Full-fat coconut milk',unit:'ml',base:200},{name:'Water',unit:'ml',base:100},{name:'Salt',unit:'g',base:2},{name:'Sugar',unit:'g',base:5}],
+    steps:['Rinse jasmine rice until water runs clear.','Combine coconut milk and water, pour over rice in the pot.','Add salt and sugar, stir once.','Select Rice mode and press Start.','Fluff gently — the rice will be slightly stickier than usual.'],
+    tip:'Use full-fat coconut milk for the best flavour and texture.' },
+
+  { id:8, mode:'rice', emoji:'🫒', title:'Mediterranean Tomato Rice', desc:'Rice cooked in tomato passata with olives and oregano — a Greek-inspired side dish.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:370, protein:7, carbs:62, fat:10, fibre:3 },
+    ingredients:[{name:'Long-grain white rice',unit:'g',base:185},{name:'Tomato passata',unit:'ml',base:150},{name:'Water or broth',unit:'ml',base:180},{name:'Kalamata olives (pitted, halved)',unit:'g',base:30},{name:'Dried oregano',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse rice and drain.','Mix passata, water, olive oil, oregano and salt. Pour over rice.','Scatter olives on top.','Select Rice mode and press Start.','Stir gently before serving. Top with crumbled feta if desired.'],
+    tip:'Total liquid should equal what you normally use for the rice — passata counts toward this.' },
+
+  { id:9, mode:'rice', emoji:'🇮🇷', title:'Persian Saffron Rice', desc:'Golden, fragrant rice infused with saffron and topped with a buttery crust (tahdig).', time:'~50 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:355, protein:6, carbs:62, fat:10, fibre:1 },
+    ingredients:[{name:'Basmati rice',unit:'g',base:185},{name:'Water',unit:'ml',base:340},{name:'Saffron threads',unit:'g',base:0.25},{name:'Hot water (for saffron)',unit:'ml',base:30},{name:'Butter',unit:'g',base:20},{name:'Salt',unit:'g',base:4}],
+    steps:['Rinse basmati rice thoroughly and soak 20 min. Drain.','Steep saffron in 30 ml hot water for 10 min.','Add rice, water, butter and salt to pot.','Drizzle saffron water over the top — do not stir.','Select Rice mode. Let rest 10 min on Keep Warm for a golden crust.'],
+    tip:'The crust that forms at the bottom (tahdig) is the prized part — scrape it out carefully.' },
+
+  // ─── QUICK RICE ─────────────────────────────────────────
+  { id:10, mode:'quick', emoji:'🍳', title:'Quick White Rice', desc:'The fastest possible fluffy white rice — weeknight staple in 30 minutes.', time:'~30 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:300, protein:6, carbs:65, fat:1, fibre:1 },
+    ingredients:[{name:'White rice (any variety)',unit:'g',base:185},{name:'Water',unit:'ml',base:300},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse rice briefly (1–2 times) and add to pot with water and salt.','Select Quick Rice mode and press Start.','Rest 3 min on Keep Warm before fluffing and serving.'],
+    tip:'Quick Rice mode is for white rice only — do not use for brown rice or other grains.' },
+
+  { id:11, mode:'quick', emoji:'🫙', title:'Quick Quinoa', desc:'Light, nutty quinoa — a high-protein alternative to rice, done fast.', time:'~25 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:220, protein:8, carbs:36, fat:4, fibre:4 },
+    ingredients:[{name:'White quinoa',unit:'g',base:130},{name:'Water or broth',unit:'ml',base:300},{name:'Olive oil',unit:'ml',base:5},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse quinoa thoroughly in a fine sieve to remove bitterness.','Add quinoa, liquid, salt and olive oil to the pot.','Select Quick Rice mode and press Start.','Fluff with a fork — quinoa is done when the little tails appear.'],
+    tip:'Quinoa expands significantly — do not overfill the pot.' },
+
+  { id:12, mode:'quick', emoji:'🍱', title:'Fried Rice Base', desc:'Slightly firmer rice in Quick mode — the ideal prep for egg fried rice.', time:'~30 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:295, protein:6, carbs:64, fat:1, fibre:1 },
+    ingredients:[{name:'Long-grain white rice',unit:'g',base:185},{name:'Water',unit:'ml',base:265},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse rice once and add to pot with water and salt.','Select Quick Rice mode. The firmer result is ideal for frying.','Spread cooked rice on a tray and refrigerate uncovered for at least 1 hour (overnight is better).','Fry in a hot pan with egg, soy sauce, spring onion and vegetables.'],
+    tip:'Drier Quick Rice makes better fried rice — less steam means firmer, non-clumping grains.' },
+
+  { id:13, mode:'quick', emoji:'🌾', title:'Quick Millet', desc:'Mild, fluffy millet — an underrated gluten-free grain that works like couscous.', time:'~25 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:215, protein:6, carbs:40, fat:4, fibre:2 },
+    ingredients:[{name:'Millet',unit:'g',base:150},{name:'Water',unit:'ml',base:330},{name:'Butter',unit:'g',base:10},{name:'Salt',unit:'g',base:2}],
+    steps:['Toast millet dry in a pan for 2 min until golden (optional but adds flavour).','Add millet, water, butter and salt to the pot.','Select Quick Rice mode and press Start.','Fluff with a fork. Serve as a grain base or salad add-in.'],
+    tip:'Try cooking millet in vegetable broth instead of water for extra depth.' },
+
+  { id:14, mode:'quick', emoji:'🍋', title:'Quick Lemon & Herb Rice', desc:'Bright, zesty white rice finished with lemon and fresh herbs in under 35 minutes.', time:'~35 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:315, protein:6, carbs:60, fat:6, fibre:1 },
+    ingredients:[{name:'Basmati rice',unit:'g',base:185},{name:'Water',unit:'ml',base:300},{name:'Lemon juice',unit:'ml',base:20},{name:'Olive oil',unit:'ml',base:10},{name:'Fresh dill or parsley',unit:'g',base:8},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse basmati and add to pot with water, olive oil and salt.','Select Quick Rice mode.','When done, stir in lemon juice and chopped herbs.','Serve immediately alongside grilled fish or chicken.'],
+    tip:'Add lemon juice after cooking — heating it turns it bitter.' },
+
+  { id:15, mode:'quick', emoji:'🥦', title:'Rice & Steamed Veg', desc:'White rice with broccoli and carrot steamed on top — a complete, effortless side.', time:'~30 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:290, protein:7, carbs:60, fat:2, fibre:4 },
+    ingredients:[{name:'White rice',unit:'g',base:185},{name:'Water',unit:'ml',base:300},{name:'Broccoli florets',unit:'g',base:100},{name:'Carrot (sliced thin)',unit:'g',base:60},{name:'Salt',unit:'g',base:2},{name:'Sesame oil (to finish)',unit:'ml',base:5}],
+    steps:['Add rice and water to the pot. Select Quick Rice mode.','About 10 min before the cycle ends, place broccoli and carrot on top of the rice.','Let the steam cook the vegetables through.','Drizzle sesame oil over the veg before serving.'],
+    tip:'Cut vegetables thin so they cook through in the remaining steam time.' },
+
+  // ─── CONGEE ─────────────────────────────────────────────
+  { id:16, mode:'congee', emoji:'🥣', title:'Classic Plain Congee', desc:'Silky smooth rice porridge — ultimate comfort food. Top with anything you like.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:160, protein:3, carbs:35, fat:1, fibre:1 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Water',unit:'ml',base:950},{name:'Fresh ginger slices',unit:'g',base:10},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse rice and add to pot with water, ginger and salt.','Select Congee mode and press Start.','Stir once midway if possible.','Serve topped with spring onions, sesame oil, soy sauce, or a soft-boiled egg.'],
+    tip:'Use the congee scale line on the inner pot — not the rice scale.' },
+
+  { id:17, mode:'congee', emoji:'🐟', title:'Fish & Ginger Congee', desc:'Cantonese-style silky congee with delicate white fish, ginger and sesame.', time:'~65 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:255, protein:22, carbs:34, fat:4, fibre:1 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Water',unit:'ml',base:950},{name:'White fish fillet (cod or tilapia)',unit:'g',base:120},{name:'Fresh ginger (julienned)',unit:'g',base:10},{name:'Soy sauce',unit:'ml',base:15},{name:'Sesame oil',unit:'ml',base:5},{name:'Spring onion',unit:'g',base:15}],
+    steps:['Rinse rice and cook with water in Congee mode.','About 10 min before the cycle ends, open lid and lay fish and ginger on top.','Replace lid and let residual steam finish cooking the fish.','Drizzle soy sauce and sesame oil. Top with spring onion.'],
+    tip:'Do not stir after adding fish — it will break apart. Let it poach gently.' },
+
+  { id:18, mode:'congee', emoji:'🌾', title:'Oat & Honey Porridge', desc:'Creamy oatmeal in Congee mode — a warming, filling breakfast.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:235, protein:7, carbs:43, fat:4, fibre:4 },
+    ingredients:[{name:'Rolled oats',unit:'g',base:45},{name:'Water',unit:'ml',base:480},{name:'Milk (or plant milk)',unit:'ml',base:120},{name:'Honey',unit:'ml',base:20},{name:'Ground cinnamon',unit:'g',base:1},{name:'Salt',unit:'g',base:1}],
+    steps:['Add oats, water, milk, cinnamon and salt to the inner pot.','Select Congee mode and press Start.','Stir in honey when done.','Top with fruit, nuts or a drizzle of extra honey.'],
+    tip:'Use the congee water line — oats expand a lot.' },
+
+  { id:19, mode:'congee', emoji:'🍠', title:'Sweet Potato Congee', desc:'Earthy, naturally sweet congee with melting sweet potato cubes.', time:'~65 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:200, protein:4, carbs:45, fat:1, fibre:3 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Sweet potato (diced 1 cm)',unit:'g',base:150},{name:'Water',unit:'ml',base:950},{name:'Salt',unit:'g',base:2},{name:'Brown sugar (optional)',unit:'g',base:8}],
+    steps:['Peel and dice sweet potato into 1 cm cubes.','Add rice, sweet potato, water and salt to the pot.','Select Congee mode and press Start.','Stir in brown sugar at the end if desired.'],
+    tip:'The sweet potato mostly dissolves into the congee, adding sweetness and a golden colour.' },
+
+  { id:20, mode:'congee', emoji:'🐷', title:'Pork & Century Egg Congee', desc:'The definitive Hong Kong-style congee — rich, savoury and deeply comforting.', time:'~70 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:300, protein:18, carbs:36, fat:9, fibre:1 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Water',unit:'ml',base:1000},{name:'Minced pork',unit:'g',base:100},{name:'Century egg (quartered)',unit:'',base:1},{name:'Soy sauce',unit:'ml',base:15},{name:'Sesame oil',unit:'ml',base:5},{name:'White pepper',unit:'g',base:1},{name:'Ginger slices',unit:'g',base:8}],
+    steps:['Mix minced pork with soy sauce and a pinch of white pepper. Set aside.','Add rice, water and ginger to the pot. Select Congee mode.','About 10 min before end, add pork in small pieces and century egg quarters.','Stir gently, replace lid and finish.','Season with sesame oil and more white pepper.'],
+    tip:'Century eggs are found in Asian grocery stores. Salted eggs work as a substitute.' },
+
+  { id:21, mode:'congee', emoji:'🍄', title:'Miso & Mushroom Congee', desc:'Japanese-inspired umami congee with shiitake mushrooms and white miso.', time:'~65 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:200, protein:7, carbs:37, fat:3, fibre:2 },
+    ingredients:[{name:'Japanese short-grain rice',unit:'g',base:100},{name:'Water',unit:'ml',base:900},{name:'Dried shiitake mushrooms',unit:'g',base:15},{name:'White miso paste',unit:'g',base:20},{name:'Soy sauce',unit:'ml',base:10},{name:'Sesame oil',unit:'ml',base:5},{name:'Spring onion',unit:'g',base:10}],
+    steps:['Soak dried shiitake in 100 ml hot water for 15 min. Reserve the soaking liquid.','Slice mushrooms. Add rice, water, mushroom soaking liquid and soy sauce to the pot.','Add sliced mushrooms. Select Congee mode.','When done, stir in miso paste off-heat — do not cook after this.','Drizzle sesame oil and scatter spring onion.'],
+    tip:'Never boil miso — add it at the very end to preserve its flavour and probiotics.' },
+
+  { id:22, mode:'congee', emoji:'🫚', title:'Peanut & Sesame Congee', desc:'Comforting Cantonese-style sweet congee (tong sui) with peanuts and sesame paste.', time:'~65 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:380, protein:12, carbs:48, fat:17, fibre:4 },
+    ingredients:[{name:'Glutinous rice',unit:'g',base:100},{name:'Water',unit:'ml',base:1000},{name:'Raw peanuts',unit:'g',base:60},{name:'Black sesame paste',unit:'g',base:30},{name:'Rock sugar (or regular)',unit:'g',base:20}],
+    steps:['Soak peanuts in cold water for 1 hour, drain.','Add glutinous rice, peanuts and water to the pot.','Select Congee mode and press Start.','When done, stir in sesame paste and sugar until melted.'],
+    tip:'Black sesame paste is sold in jars at Asian supermarkets. Tahini makes a lighter substitute.' },
+
+  { id:23, mode:'congee', emoji:'🌱', title:'Spinach & Egg Drop Congee', desc:'Light, nourishing congee with silky egg ribbons and fresh spinach.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:210, protein:10, carbs:35, fat:4, fibre:2 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Water',unit:'ml',base:950},{name:'Eggs',unit:'',base:2},{name:'Baby spinach',unit:'g',base:60},{name:'Soy sauce',unit:'ml',base:10},{name:'Sesame oil',unit:'ml',base:5},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse rice and cook in Congee mode with water and salt.','When done, open lid and stir the congee while drizzling beaten egg in a thin stream.','Add spinach and stir — it wilts in 30 seconds.','Finish with soy sauce and sesame oil.'],
+    tip:'Drizzle the egg slowly while stirring to create silky ribbons rather than scrambled lumps.' },
+
+  // ─── STEW ───────────────────────────────────────────────
+  { id:24, mode:'stew', emoji:'🍲', title:'Red Lentil Dal', desc:'Spiced Indian-style red lentils — rich, comforting and packed with protein.', time:'~55 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:310, protein:15, carbs:42, fat:9, fibre:10 },
+    ingredients:[{name:'Red lentils',unit:'g',base:100},{name:'Water or broth',unit:'ml',base:360},{name:'Tomato (chopped)',unit:'g',base:120},{name:'Onion (diced)',unit:'g',base:60},{name:'Garlic (minced)',unit:'g',base:10},{name:'Ground cumin',unit:'g',base:3},{name:'Turmeric',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse red lentils until water runs clear.','Add all ingredients to the inner pot and stir.','Select Stew mode and press Start.','Stir before serving. Serve over rice with a squeeze of lemon.'],
+    tip:'Red lentils dissolve into a thick, creamy dal — perfect for Stew mode.' },
+
+  { id:25, mode:'stew', emoji:'🐔', title:'Chicken & Potato Stew', desc:'Hearty one-pot stew with tender chicken and soft potatoes in a savoury broth.', time:'~70 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:420, protein:32, carbs:38, fat:14, fibre:4 },
+    ingredients:[{name:'Chicken thighs (boneless, diced)',unit:'g',base:200},{name:'Potato (diced 2 cm)',unit:'g',base:200},{name:'Carrot (sliced)',unit:'g',base:80},{name:'Onion (diced)',unit:'g',base:60},{name:'Chicken broth',unit:'ml',base:360},{name:'Soy sauce',unit:'ml',base:15},{name:'Garlic (minced)',unit:'g',base:8},{name:'Salt & pepper',unit:'to taste',base:1}],
+    steps:['Cut chicken into bite-sized pieces. Dice potato and slice carrot.','Add all ingredients to the inner pot and stir.','Select Stew mode and press Start.','Taste and adjust seasoning. Thicken with a cornstarch slurry if desired.'],
+    tip:'Keep potato pieces at least 2 cm so they do not fully dissolve during stewing.' },
+
+  { id:26, mode:'stew', emoji:'🫘', title:'White Bean & Tomato Soup', desc:'Simple Tuscan-inspired soup with canned white beans, tomato and rosemary.', time:'~50 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:290, protein:13, carbs:38, fat:9, fibre:10 },
+    ingredients:[{name:'Canned white beans (drained)',unit:'g',base:200},{name:'Canned chopped tomatoes',unit:'g',base:200},{name:'Vegetable broth',unit:'ml',base:240},{name:'Garlic (minced)',unit:'g',base:8},{name:'Dried rosemary',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Add all ingredients to the inner pot and stir.','Select Stew mode and press Start.','Mash a few beans against the side for a creamier texture.','Serve with crusty bread.'],
+    tip:'Pre-cooked or canned legumes work best — dried beans need soaking and extra time.' },
+
+  { id:27, mode:'stew', emoji:'🥛', title:'Rice Pudding', desc:'Creamy, delicate rice pudding with vanilla and a hint of cardamom.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:330, protein:8, carbs:54, fat:10, fibre:1 },
+    ingredients:[{name:'Short-grain white rice',unit:'g',base:65},{name:'Whole milk',unit:'ml',base:360},{name:'Sugar',unit:'g',base:25},{name:'Vanilla extract',unit:'ml',base:3},{name:'Ground cardamom',unit:'g',base:0.5},{name:'Butter',unit:'g',base:10}],
+    steps:['Add rice, milk, sugar and cardamom to the inner pot. Stir.','Select Stew mode and press Start.','Stir every 15–20 min if possible to prevent a skin forming.','Stir in vanilla and butter when done. Serve warm or chilled.'],
+    tip:'Pudding thickens as it cools — stir in a splash of warm milk if needed.' },
+
+  { id:28, mode:'stew', emoji:'🇯🇵', title:'Nikujaga (Japanese Beef Stew)', desc:'A beloved Japanese comfort stew of beef, potato and onion in a sweet-soy broth.', time:'~65 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:430, protein:24, carbs:46, fat:14, fibre:4 },
+    ingredients:[{name:'Thinly sliced beef',unit:'g',base:150},{name:'Potato (diced 3 cm)',unit:'g',base:250},{name:'Onion (sliced)',unit:'g',base:100},{name:'Carrot (sliced)',unit:'g',base:80},{name:'Soy sauce',unit:'ml',base:30},{name:'Mirin',unit:'ml',base:30},{name:'Sugar',unit:'g',base:10},{name:'Water',unit:'ml',base:240}],
+    steps:['Mix soy sauce, mirin, sugar and water in the pot.','Add beef, potato, onion and carrot.','Select Stew mode and press Start.','Serve over steamed rice.'],
+    tip:'Thinly sliced shabu-shabu beef is ideal — ask at Asian supermarkets.' },
+
+  { id:29, mode:'stew', emoji:'🇲🇦', title:'Moroccan Chickpea Tagine', desc:'Warmly spiced chickpeas with tomato, preserved lemon and a hint of cinnamon.', time:'~55 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:310, protein:12, carbs:40, fat:11, fibre:10 },
+    ingredients:[{name:'Canned chickpeas (drained)',unit:'g',base:200},{name:'Canned crushed tomatoes',unit:'g',base:200},{name:'Vegetable broth',unit:'ml',base:120},{name:'Onion (diced)',unit:'g',base:80},{name:'Garlic (minced)',unit:'g',base:8},{name:'Ground cumin',unit:'g',base:3},{name:'Ground coriander',unit:'g',base:2},{name:'Cinnamon',unit:'g',base:1},{name:'Preserved lemon rind (chopped)',unit:'g',base:15},{name:'Olive oil',unit:'ml',base:15}],
+    steps:['Add all ingredients to the inner pot and stir.','Select Stew mode and press Start.','Taste and adjust salt when done (preserved lemon is already salty).','Serve over couscous or rice, topped with fresh coriander.'],
+    tip:'Preserved lemons are sold in jars at Mediterranean or Middle Eastern shops.' },
+
+  { id:30, mode:'stew', emoji:'🇰🇷', title:'Doenjang Jjigae', desc:'A staple Korean soybean stew with tofu, zucchini and mushrooms.', time:'~55 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:175, protein:13, carbs:12, fat:8, fibre:3 },
+    ingredients:[{name:'Firm tofu (cubed)',unit:'g',base:150},{name:'Zucchini (diced)',unit:'g',base:100},{name:'Shiitake or button mushrooms',unit:'g',base:80},{name:'Doenjang paste',unit:'g',base:30},{name:'Water or dashi',unit:'ml',base:400},{name:'Garlic (minced)',unit:'g',base:6},{name:'Spring onion',unit:'g',base:15}],
+    steps:['Dissolve doenjang paste in a little warm water, then add to pot with all the liquid.','Add tofu, zucchini, mushrooms and garlic.','Select Stew mode and press Start.','Top with spring onion. Serve alongside steamed rice.'],
+    tip:'Doenjang is fermented soybean paste — stronger than miso. Find it at Korean grocery stores.' },
+
+  { id:31, mode:'stew', emoji:'🫕', title:'Lebanese Lentil & Chard Soup', desc:'Silky golden lentils with wilted chard, cumin and lemon — bright and deeply satisfying.', time:'~55 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:295, protein:14, carbs:38, fat:9, fibre:10 },
+    ingredients:[{name:'Red lentils',unit:'g',base:100},{name:'Swiss chard (roughly chopped)',unit:'g',base:80},{name:'Water or broth',unit:'ml',base:480},{name:'Onion (diced)',unit:'g',base:60},{name:'Garlic (minced)',unit:'g',base:8},{name:'Ground cumin',unit:'g',base:3},{name:'Lemon juice',unit:'ml',base:20},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse lentils and add to pot with water, onion, garlic, cumin, olive oil and salt.','Select Stew mode and press Start.','Add chard in the last 10 min if possible — or stir in when done and cover 5 min.','Stir in lemon juice just before serving.'],
+    tip:'Spinach works just as well as chard and needs zero chopping.' },
+
+  { id:32, mode:'stew', emoji:'🌶️', title:'Thai Red Curry Soup', desc:'Fragrant coconut broth with red curry paste, sweet potato and chickpeas.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:370, protein:10, carbs:42, fat:18, fibre:7 },
+    ingredients:[{name:'Coconut milk',unit:'ml',base:200},{name:'Water or broth',unit:'ml',base:200},{name:'Thai red curry paste',unit:'g',base:20},{name:'Sweet potato (diced 2 cm)',unit:'g',base:150},{name:'Canned chickpeas (drained)',unit:'g',base:120},{name:'Fish sauce (or soy sauce)',unit:'ml',base:10},{name:'Lime juice',unit:'ml',base:15},{name:'Fresh basil or coriander',unit:'g',base:10}],
+    steps:['Whisk curry paste into coconut milk until smooth. Add to pot.','Add broth, sweet potato and chickpeas.','Select Stew mode and press Start.','Stir in fish sauce and lime juice when done. Top with fresh herbs.'],
+    tip:'20 g of curry paste is medium-spicy. Use 10 g for mild, 30 g for hot.' },
+
+  { id:33, mode:'stew', emoji:'🥩', title:'Beef & Mushroom Stew', desc:'A simplified French-inspired stew — beef and mushrooms braised in red wine and broth.', time:'~75 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:380, protein:28, carbs:14, fat:18, fibre:3 },
+    ingredients:[{name:'Beef chuck (diced 3 cm)',unit:'g',base:200},{name:'Button mushrooms (halved)',unit:'g',base:120},{name:'Carrot (sliced)',unit:'g',base:80},{name:'Onion (diced)',unit:'g',base:80},{name:'Red wine',unit:'ml',base:80},{name:'Beef broth',unit:'ml',base:240},{name:'Tomato paste',unit:'g',base:15},{name:'Garlic (minced)',unit:'g',base:8},{name:'Dried thyme',unit:'g',base:1},{name:'Salt & pepper',unit:'to taste',base:1}],
+    steps:['Add all ingredients to the inner pot and stir.','Select Stew mode and press Start.','The beef will be tender but not falling apart — Stew mode is slow and gentle.','Serve over mashed potato or egg noodles.'],
+    tip:'Use a drinkable red wine — cooking does not improve a bad wine.' },
+
+  { id:34, mode:'stew', emoji:'🫚', title:'Shakshuka-Style Tomato Stew', desc:'Rich, spiced tomato sauce cooked in Stew mode — finish with eggs poached right in the pot.', time:'~50 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:255, protein:13, carbs:22, fat:13, fibre:6 },
+    ingredients:[{name:'Canned crushed tomatoes',unit:'g',base:400},{name:'Onion (diced)',unit:'g',base:80},{name:'Red bell pepper (diced)',unit:'g',base:80},{name:'Garlic (minced)',unit:'g',base:8},{name:'Smoked paprika',unit:'g',base:3},{name:'Ground cumin',unit:'g',base:2},{name:'Chilli flakes',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:15},{name:'Eggs',unit:'',base:2},{name:'Salt',unit:'g',base:3}],
+    steps:['Add all ingredients except eggs to the inner pot and stir.','Select Stew mode and press Start.','When done, make small wells in the sauce and crack eggs in.','Replace lid and leave on Keep Warm for 5–8 min until eggs are just set.','Serve with warm bread or pita.'],
+    tip:'Check eggs at 5 min — Keep Warm will set the whites while yolks stay runny.' },
+
+  { id:35, mode:'stew', emoji:'🍜', title:'Pork & Miso Ramen Broth', desc:'A simplified but deeply flavoured pork and miso broth — perfect ramen base.', time:'~70 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:340, protein:20, carbs:12, fat:22, fibre:1 },
+    ingredients:[{name:'Pork belly (sliced thin)',unit:'g',base:150},{name:'Water',unit:'ml',base:600},{name:'White miso paste',unit:'g',base:25},{name:'Soy sauce',unit:'ml',base:20},{name:'Mirin',unit:'ml',base:15},{name:'Garlic (minced)',unit:'g',base:6},{name:'Ginger (sliced)',unit:'g',base:8},{name:'Spring onion',unit:'g',base:15}],
+    steps:['Add water, soy sauce, mirin, garlic and ginger to the pot.','Add pork belly pieces. Select Stew mode.','When done, stir in miso paste off-heat — do not reboil.','Serve over cooked ramen noodles with spring onion, a soft egg, and nori.'],
+    tip:'For a clearer broth, skim the surface once during cooking if you can.' },
+
+  { id:36, mode:'stew', emoji:'🇮🇳', title:'Saag (Creamy Spinach Curry)', desc:'Velvety spiced spinach stew — serve with rice or flatbread for a complete meal.', time:'~55 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:195, protein:6, carbs:14, fat:13, fibre:5 },
+    ingredients:[{name:'Fresh spinach',unit:'g',base:200},{name:'Canned chopped tomatoes',unit:'g',base:150},{name:'Onion (diced)',unit:'g',base:80},{name:'Garlic (minced)',unit:'g',base:10},{name:'Fresh ginger (grated)',unit:'g',base:8},{name:'Ground cumin',unit:'g',base:2},{name:'Garam masala',unit:'g',base:2},{name:'Turmeric',unit:'g',base:1},{name:'Cream or coconut milk',unit:'ml',base:60},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
+    steps:['Add all ingredients except cream to the inner pot and stir.','Select Stew mode and press Start.','When done, use a hand blender to partially blend the stew to a rough purée.','Stir in cream or coconut milk and serve.'],
+    tip:'Add 150 g of cubed paneer or tofu before blending for a more substantial saag paneer.' },
+];
+
+function renderCards() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  document.getElementById('header-count').textContent = `4 cooking modes · scalable servings · ${recipes.length} recipes`;
+  updateCount('all');
+  recipes.forEach(r => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.dataset.mode = r.mode;
+    el.dataset.id = r.id;
+    el.dataset.servings = r.baseServings;
+    const modeLabel = {rice:'Rice',quick:'Quick Rice',congee:'Congee',stew:'Stew'}[r.mode];
+    el.innerHTML = `
+      <div class="card-top">
+        <span class="mode-badge badge-${r.mode}">${modeLabel}</span>
+        <span class="card-emoji">${r.emoji}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${r.title}</div>
+        <div class="card-desc">${r.desc}</div>
+        <div class="card-meta">
+          <span>⏱ ${r.time}</span>
+          <span><span class="meta-dot"></span>${r.difficulty}</span>
+        </div>
+        <div class="nutrition-bar" id="nutr-${r.id}">${renderNutr(r, r.baseServings)}</div>
+        <div class="servings-row">
+          <span class="servings-label">Servings</span>
+          <div class="servings-control">
+            <button class="srv-btn" onclick="changeSrv(${r.id},-1,event)">−</button>
+            <span class="srv-count" id="srv-${r.id}">${r.baseServings}</span>
+            <button class="srv-btn" onclick="changeSrv(${r.id},1,event)">+</button>
+          </div>
+        </div>
+        <div class="ingredients-title">Ingredients</div>
+        <ul class="ingredients-list" id="ing-${r.id}">${renderIng(r, r.baseServings)}</ul>
+      </div>
+      <button class="expand-btn" onclick="toggleExpand(${r.id},event)">
+        Steps & Tips <span class="expand-icon">▼</span>
+      </button>
+      <div class="collapsible" id="col-${r.id}">
+        <div class="steps-title">Method</div>
+        <ol class="steps-list">${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <div class="tip-box"><strong>Tip:</strong> ${r.tip}</div>
+        <p class="nutr-note">Nutritional values are estimates per serving based on standard ingredient data.</p>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+function renderNutr(r, servings) {
+  const ratio = servings / r.baseServings;
+  const n = r.nutrition;
+  return `
+    <div class="nutr-cell kcal"><span class="nutr-value">${Math.round(n.kcal * ratio)}</span><span class="nutr-label">kcal</span></div>
+    <div class="nutr-cell"><span class="nutr-value">${Math.round(n.protein * ratio)}g</span><span class="nutr-label">protein</span></div>
+    <div class="nutr-cell"><span class="nutr-value">${Math.round(n.carbs * ratio)}g</span><span class="nutr-label">carbs</span></div>
+    <div class="nutr-cell"><span class="nutr-value">${Math.round(n.fat * ratio)}g</span><span class="nutr-label">fat</span></div>
+    <div class="nutr-cell"><span class="nutr-value">${Math.round(n.fibre * ratio)}g</span><span class="nutr-label">fibre</span></div>`;
+}
+
+function renderIng(r, servings) {
+  const ratio = servings / r.baseServings;
+  return r.ingredients.map(ing => {
+    if (ing.unit === 'to taste') return `<li><span class="ing-name">${ing.name}</span><span class="ing-amount">to taste</span></li>`;
+    const raw = ing.base * ratio;
+    const fmt = formatAmt(raw, ing.unit);
+    const u = ing.unit ? ' ' + ing.unit : '';
+    return `<li><span class="ing-name">${ing.name}</span><span class="ing-amount">${fmt}${u}</span></li>`;
+  }).join('');
+}
+
+function formatAmt(n, unit) {
+  if (n === 0) return '0';
+  if (unit === 'g' || unit === 'ml') {
+    if (n < 5) return (Math.round(n * 2) / 2).toString();
+    if (n < 20) return Math.round(n).toString();
+    if (n < 100) return (Math.round(n / 5) * 5).toString();
+    return (Math.round(n / 10) * 10).toString();
+  }
+  const rounded = Math.round(n * 4) / 4;
+  const whole = Math.floor(rounded);
+  const frac = rounded - whole;
+  const fracMap = {0:'',0.25:'¼',0.5:'½',0.75:'¾'};
+  const fracStr = fracMap[frac] ?? '';
+  if (whole === 0) return fracStr || '<1';
+  return whole + (fracStr ? ' '+fracStr : '');
+}
+
+function changeSrv(id, delta, e) {
+  e.stopPropagation();
+  const card = document.querySelector(`[data-id="${id}"]`);
+  let s = parseInt(card.dataset.servings) + delta;
+  if (s < 1) s = 1;
+  if (s > 6) s = 6;
+  card.dataset.servings = s;
+  document.getElementById(`srv-${id}`).textContent = s;
+  const r = recipes.find(x=>x.id===id);
+  document.getElementById(`ing-${id}`).innerHTML = renderIng(r, s);
+  document.getElementById(`nutr-${id}`).innerHTML = renderNutr(r, s);
+}
+
+function toggleExpand(id, e) {
+  e.stopPropagation();
+  document.querySelector(`[data-id="${id}"]`).classList.toggle('expanded');
+}
+
+function updateCount(mode) {
+  const n = mode === 'all' ? recipes.length : recipes.filter(r=>r.mode===mode).length;
+  document.getElementById('recipe-count').textContent = `Showing ${n} recipe${n!==1?'s':''}`;
+}
+
+function filter(mode, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card=>{
+    card.classList.toggle('hidden', mode !== 'all' && card.dataset.mode !== mode);
+  });
+  updateCount(mode);
+}
+
+renderCards();
+</script>
+</body>
+</html>

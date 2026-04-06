@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaclav's Stuff — Guides, Tutorials & References</title>
+<meta name="description" content="A personal collection of guides, tutorials, and reference pages — created with Claude.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0d0a;
+    --surface: #1a1612;
+    --surface-hover: #231f19;
+    --paper: #faf6ef;
+    --cream: #f5f0e8;
+    --amber: #c8872a;
+    --amber-light: #f0c070;
+    --amber-glow: rgba(200,135,42,0.12);
+    --text: #e8e0d4;
+    --text-muted: rgba(232,224,212,0.5);
+    --text-dim: rgba(232,224,212,0.3);
+    --border: rgba(232,224,212,0.08);
+    --border-hover: rgba(232,224,212,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    padding: 80px 40px 70px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,135,42,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .header-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+    margin-bottom: 24px;
+    padding-left: 2px;
+  }
+
+  /* ── CARD GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-light));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--amber-glow);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .card-emoji {
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+
+  .card-tag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid;
+  }
+
+  .tag-cooking {
+    color: var(--amber);
+    border-color: rgba(200,135,42,0.3);
+    background: rgba(200,135,42,0.08);
+  }
+
+  .tag-diy {
+    color: #c0392b;
+    border-color: rgba(192,57,43,0.3);
+    background: rgba(192,57,43,0.08);
+  }
+
+  .tag-guide {
+    color: #27ae60;
+    border-color: rgba(39,174,96,0.3);
+    background: rgba(39,174,96,0.08);
+  }
+
+  .tag-reference {
+    color: #3498db;
+    border-color: rgba(52,152,219,0.3);
+    background: rgba(52,152,219,0.08);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+  }
+
+  .card:hover .card-arrow {
+    color: var(--amber);
+  }
+
+  .card-arrow svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-arrow svg {
+    transform: translateX(4px);
+  }
+
+  /* ── EMPTY STATE / COMING SOON ── */
+  .coming-soon {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a {
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 50px 20px 40px; }
+    main { padding: 32px 16px 60px; }
+    .grid { grid-template-columns: 1fr; }
+    .card { padding: 24px 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Personal Knowledge Base</div>
+  <h1>Vaclav's <em>Stuff</em></h1>
+  <p class="header-desc">A growing collection of guides, tutorials, and references — researched and written with Claude.</p>
+</header>
+
+<main>
+  <div class="section-label">All Pages</div>
+
+  <div class="grid" id="grid">
+
+    <a class="card" href="rice-cooker-recipes.html" id="card-rice-cooker">
+      <div class="card-header">
+        <span class="card-emoji">🍚</span>
+        <span class="card-tag tag-cooking">Cooking</span>
+      </div>
+      <div class="card-title">Rice Cooker Recipe Book</div>
+      <div class="card-desc">36 recipes across 4 cooking modes for the Xiaomi MFB05M — rice, congee, stew, and quick rice. Scalable servings with full nutritional info.</div>
+      <div class="card-arrow">
+        Read
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a class="card" href="wall-hanging-guide.html" id="card-wall-hanging">
+      <div class="card-header">
+        <span class="card-emoji">🔨</span>
+        <span class="card-tag tag-diy">DIY</span>
+      </div>
+      <div class="card-title">How to Hang Anything on Any Wall</div>
+      <div class="card-desc">Complete beginner's reference for UK homes — wall types, fixings, tools, drill bits, step-by-step method, and no-drill alternatives.</div>
+      <div class="card-arrow">
+        Read
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  Vaclav's Stuff · Built with Claude
+</footer>
+
+</body>
+</html>
