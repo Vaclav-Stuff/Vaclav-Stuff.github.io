@@ -115,7 +115,6 @@
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    white-space: nowrap;
   }
 
   .premium-table th {
@@ -191,6 +190,115 @@
   .tier-exhibition { color: #27ae60; border-color: rgba(39,174,96,0.3); background: rgba(39,174,96,0.08); }
   .tier-finale { color: #c0392b; border-color: rgba(192,57,43,0.3); background: rgba(192,57,43,0.08); }
 
+  .meta-text {
+    color: rgba(26, 18, 8, 0.45);
+    font-size: 13px;
+    margin-left: 6px;
+  }
+
+  /* Entry Status Badges */
+  .status-badge {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(26, 18, 8, 0.04);
+    color: rgba(26, 18, 8, 0.6);
+  }
+  .countdown-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .countdown-badge::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 105, 20, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(139, 105, 20, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 105, 20, 0); }
+  }
+  
+  .btn-view {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .btn-view:hover, .btn-view.active {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-view svg {
+    width: 14px; height: 14px;
+    transition: transform 0.2s;
+  }
+  .btn-view.active svg {
+    transform: rotate(180deg);
+  }
+  
+  .players-row td {
+    padding: 0 !important;
+    border-bottom: 1px solid var(--rule);
+    background: var(--highlight);
+  }
+  .players-expand {
+    padding: 24px 40px;
+  }
+  .players-expand h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .players-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .player-pill {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+  .full-list-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .full-list-link:hover {
+    color: var(--warm);
+  }
+
   footer {
     text-align: center;
     padding: 40px;
@@ -203,6 +311,91 @@
   @media (max-width: 600px) {
     header { padding: 40px 20px; }
     .container { padding: 24px 16px; }
+
+    .table-container {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
+    }
+
+    .premium-table thead {
+      display: none;
+    }
+
+    .premium-table,
+    .premium-table tbody {
+      display: block;
+    }
+
+    .premium-table tr {
+      display: block;
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .premium-table tr:hover td {
+      background: transparent;
+    }
+
+    .premium-table td {
+      display: block;
+      padding: 6px 0;
+      border-bottom: none;
+      font-size: 14px;
+    }
+
+    .premium-table td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26, 18, 8, 0.4);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .premium-table td:first-child {
+      font-size: 16px;
+      font-weight: 600;
+      padding-bottom: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .premium-table td:first-child::before {
+      display: none;
+    }
+
+    .players-row {
+      margin-top: -12px !important;
+      border-top: none !important;
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+    }
+
+    .players-row td {
+      padding: 0 !important;
+    }
+
+    .players-row td::before {
+      display: none;
+    }
+
+    .players-expand {
+      padding: 16px 0;
+    }
+
+    .btn-view {
+      width: 100%;
+      justify-content: center;
+      margin-top: 4px;
+    }
   }
 </style>
 </head>
@@ -228,83 +421,111 @@
         <thead>
           <tr>
             <th>Tournament</th>
-            <th>Tier</th>
-            <th>Surface</th>
+            <th>Location & Time</th>
+            <th>Tier & Surface</th>
             <th>Dates</th>
+            <th>Top Players</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><a href="https://atptour.com" target="_blank">Mubadala Citi DC Open</a></td>
-            <td><span class="tier-badge tier-500">ATP 500</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>27 July – 2 August 2026</td>
+          <tr data-start-date="2026-07-27" data-target-row="players-dc">
+            <td data-label="Tournament"><a href="https://atptour.com" target="_blank">Mubadala Citi DC Open</a></td>
+            <td data-label="Location">Washington, D.C., USA <span class="meta-text">(-5 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-500">ATP 500</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">27 July – 2 August 2026</td>
+            <td data-label="Top Players"><div class="entry-status"></div></td>
+          </tr>
+          <tr class="players-row" id="players-dc" style="display: none;">
+            <td colspan="5">
+              <div class="players-expand">
+                <h4>Confirmed Top Entries</h4>
+                <div class="players-list">
+                  <span class="player-pill">🇦🇺 Alex de Minaur</span>
+                  <span class="player-pill">🇨🇦 Felix Auger-Aliassime</span>
+                  <span class="player-pill">🇺🇸 Taylor Fritz</span>
+                  <span class="player-pill">🇺🇸 Ben Shelton</span>
+                  <span class="player-pill">🇺🇸 Frances Tiafoe</span>
+                </div>
+                <a href="https://www.atptour.com/en/tournaments/washington/418/overview" target="_blank" class="full-list-link">View Full Entry List on ATP Tour ↗</a>
+              </div>
+            </td>
           </tr>
           <tr>
-            <td><a href="https://nationalbankopen.com" target="_blank">National Bank Open</a></td>
-            <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>2 August – 13 August 2026</td>
+            <td data-label="Tournament"><a href="https://nationalbankopen.com" target="_blank">National Bank Open</a></td>
+            <td data-label="Location">Montreal/Toronto, Canada <span class="meta-text">(-5 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-1000">Masters 1000</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">2 August – 13 August 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
           </tr>
           <tr>
-            <td><a href="https://atptourexperiences.com" target="_blank">Cincinnati Open</a></td>
-            <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>13 August – 23 August 2026</td>
+            <td data-label="Tournament"><a href="https://atptourexperiences.com" target="_blank">Cincinnati Open</a></td>
+            <td data-label="Location">Cincinnati, USA <span class="meta-text">(-5 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-1000">Masters 1000</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">13 August – 23 August 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
           </tr>
           <tr>
-            <td><a href="https://atptour.com" target="_blank">US Open</a></td>
-            <td><span class="tier-badge tier-slam">Grand Slam</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>31 August – 13 September 2026</td>
+            <td data-label="Tournament"><a href="https://atptour.com" target="_blank">US Open</a></td>
+            <td data-label="Location">New York City, USA <span class="meta-text">(-5 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-slam">Grand Slam</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">31 August – 13 September 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
           </tr>
           <tr>
-            <td><a href="https://atptour.com" target="_blank">Laver Cup</a></td>
-            <td><span class="tier-badge tier-exhibition">Team Exhibition</span></td>
-            <td>Hard (Indoor)</td>
-            <td>25 September – 27 September 2026</td>
+            <td data-label="Tournament"><a href="https://atptour.com" target="_blank">Laver Cup</a></td>
+            <td data-label="Location">London, UK <span class="meta-text">(0 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-exhibition">Team Exhibition</span> <span class="meta-text">• Hard (Indoor)</span></td>
+            <td data-label="Dates">25 September – 27 September 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Team Rosters</span></td>
+          </tr>
+          <tr data-start-date="2026-09-30">
+            <td data-label="Tournament"><a href="https://atptour.com" target="_blank">Kinoshita Group Japan Open</a></td>
+            <td data-label="Location">Tokyo, Japan <span class="meta-text">(+8 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-500">ATP 500</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">30 September – 6 October 2026</td>
+            <td data-label="Top Players"><div class="entry-status"></div></td>
+          </tr>
+          <tr data-start-date="2026-09-30">
+            <td data-label="Tournament"><a href="https://atptour.com" target="_blank">China Open</a></td>
+            <td data-label="Location">Beijing, China <span class="meta-text">(+7 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-500">ATP 500</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">30 September – 6 October 2026</td>
+            <td data-label="Top Players"><div class="entry-status"></div></td>
           </tr>
           <tr>
-            <td><a href="https://atptour.com" target="_blank">Kinoshita Group Japan Open</a></td>
-            <td><span class="tier-badge tier-500">ATP 500</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>30 September – 6 October 2026</td>
+            <td data-label="Tournament"><a href="https://rolexshanghaimasters.com" target="_blank">Rolex Shanghai Masters</a></td>
+            <td data-label="Location">Shanghai, China <span class="meta-text">(+7 hrs)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-1000">Masters 1000</span> <span class="meta-text">• Hard (Outdoor)</span></td>
+            <td data-label="Dates">7 October – 18 October 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
+          </tr>
+          <tr data-start-date="2026-10-23">
+            <td data-label="Tournament"><a href="https://espn.co.uk" target="_blank">Erste Bank Open</a></td>
+            <td data-label="Location">Vienna, Austria <span class="meta-text">(+1 hr)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-500">ATP 500</span> <span class="meta-text">• Hard (Indoor)</span></td>
+            <td data-label="Dates">23 October – 1 November 2026</td>
+            <td data-label="Top Players"><div class="entry-status"></div></td>
+          </tr>
+          <tr data-start-date="2026-10-23">
+            <td data-label="Tournament"><a href="https://espn.co.uk" target="_blank">Swiss Indoors Basel</a></td>
+            <td data-label="Location">Basel, Switzerland <span class="meta-text">(+1 hr)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-500">ATP 500</span> <span class="meta-text">• Hard (Indoor)</span></td>
+            <td data-label="Dates">23 October – 1 November 2026</td>
+            <td data-label="Top Players"><div class="entry-status"></div></td>
           </tr>
           <tr>
-            <td><a href="https://atptour.com" target="_blank">China Open</a></td>
-            <td><span class="tier-badge tier-500">ATP 500</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>30 September – 6 October 2026</td>
+            <td data-label="Tournament"><a href="https://rolexparismasters.com" target="_blank">Rolex Paris Masters</a></td>
+            <td data-label="Location">Paris, France <span class="meta-text">(+1 hr)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-1000">Masters 1000</span> <span class="meta-text">• Hard (Indoor)</span></td>
+            <td data-label="Dates">2 November – 8 November 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
           </tr>
           <tr>
-            <td><a href="https://rolexshanghaimasters.com" target="_blank">Rolex Shanghai Masters</a></td>
-            <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-            <td>Hard (Outdoor)</td>
-            <td>7 October – 18 October 2026</td>
-          </tr>
-          <tr>
-            <td><a href="https://espn.co.uk" target="_blank">Erste Bank Open</a></td>
-            <td><span class="tier-badge tier-500">ATP 500</span></td>
-            <td>Hard (Indoor)</td>
-            <td>23 October – 1 November 2026</td>
-          </tr>
-          <tr>
-            <td><a href="https://espn.co.uk" target="_blank">Swiss Indoors Basel</a></td>
-            <td><span class="tier-badge tier-500">ATP 500</span></td>
-            <td>Hard (Indoor)</td>
-            <td>23 October – 1 November 2026</td>
-          </tr>
-          <tr>
-            <td><a href="https://rolexparismasters.com" target="_blank">Rolex Paris Masters</a></td>
-            <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-            <td>Hard (Indoor)</td>
-            <td>2 November – 8 November 2026</td>
-          </tr>
-          <tr>
-            <td><a href="https://nittoatpfinals.com" target="_blank">Nitto ATP Finals</a></td>
-            <td><span class="tier-badge tier-finale">Year-End Finale</span></td>
-            <td>Hard (Indoor)</td>
-            <td>15 November – 22 November 2026</td>
+            <td data-label="Tournament"><a href="https://nittoatpfinals.com" target="_blank">Nitto ATP Finals</a></td>
+            <td data-label="Location">Turin, Italy <span class="meta-text">(+1 hr)</span></td>
+            <td data-label="Tier"><span class="tier-badge tier-finale">Year-End Finale</span> <span class="meta-text">• Hard (Indoor)</span></td>
+            <td data-label="Dates">15 November – 22 November 2026</td>
+            <td data-label="Top Players"><span class="status-badge">Mandatory Field</span></td>
           </tr>
         </tbody>
       </table>
@@ -316,6 +537,51 @@
 <footer>
   Vaclav's Stuff — Tennis Calendar
 </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const today = new Date();
+    
+    document.querySelectorAll('tr[data-start-date]').forEach(row => {
+      const startDateStr = row.getAttribute('data-start-date');
+      const startDate = new Date(startDateStr);
+      
+      // 6 weeks before start
+      const lockDate = new Date(startDate);
+      lockDate.setDate(lockDate.getDate() - 42);
+      
+      const statusContainer = row.querySelector('.entry-status');
+      if (!statusContainer) return;
+      
+      if (today >= lockDate) {
+        // Locked
+        const targetId = row.getAttribute('data-target-row');
+        if (targetId) {
+          const btn = document.createElement('button');
+          btn.className = 'btn-view';
+          btn.innerHTML = 'View Entries <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+          
+          btn.addEventListener('click', () => {
+            const targetRow = document.getElementById(targetId);
+            if (targetRow) {
+              const isExpanded = targetRow.style.display !== 'none';
+              targetRow.style.display = isExpanded ? 'none' : 'table-row';
+              btn.classList.toggle('active', !isExpanded);
+            }
+          });
+          statusContainer.appendChild(btn);
+        } else {
+          statusContainer.innerHTML = '<span class="status-badge">List Locked</span>';
+        }
+      } else {
+        // Countdown
+        const diffTime = lockDate.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        statusContainer.innerHTML = `<span class="countdown-badge">Locks in ${diffDays} days</span>`;
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
