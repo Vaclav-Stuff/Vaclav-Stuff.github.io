@@ -220,6 +220,12 @@
     background: rgba(230,126,34,0.08);
   }
 
+  .tag-sports {
+    color: #2980b9;
+    border-color: rgba(41,128,185,0.3);
+    background: rgba(41,128,185,0.08);
+  }
+
   .card-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.35rem;
@@ -261,95 +267,6 @@
   .card:hover .card-arrow svg {
     transform: translateX(4px);
   }
-
-  /* ── TABLE ── */
-  .table-container {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow-x: auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-
-  .premium-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  .premium-table th {
-    background: rgba(0,0,0,0.2);
-    padding: 16px 24px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    font-weight: 600;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .premium-table td {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--text-muted);
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .premium-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .premium-table tr:hover td {
-    background: var(--surface-hover);
-    color: var(--cream);
-  }
-
-  .premium-table a {
-    color: var(--cream);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .premium-table a::after {
-    content: "↗";
-    font-size: 12px;
-    color: var(--amber);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: all 0.2s ease;
-  }
-  
-  .premium-table a:hover {
-    color: var(--amber);
-  }
-
-  .premium-table a:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .tier-badge {
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid;
-    display: inline-block;
-  }
-
-  .tier-500 { color: #3498db; border-color: rgba(52,152,219,0.3); background: rgba(52,152,219,0.08); }
-  .tier-1000 { color: #9b59b6; border-color: rgba(155,89,182,0.3); background: rgba(155,89,182,0.08); }
-  .tier-slam { color: #e67e22; border-color: rgba(230,126,34,0.3); background: rgba(230,126,34,0.08); }
-  .tier-exhibition { color: #2ecc71; border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.08); }
-  .tier-finale { color: #e74c3c; border-color: rgba(231,76,60,0.3); background: rgba(231,76,60,0.08); }
 
   /* ── EMPTY STATE / COMING SOON ── */
   .coming-soon {
@@ -451,6 +368,19 @@
       </div>
     </a>
 
+    <a class="card" href="tennis-tournaments.html" id="card-tennis">
+      <div class="card-header">
+        <span class="card-emoji">🎾</span>
+        <span class="card-tag tag-sports">Sports</span>
+      </div>
+      <div class="card-title">Tennis Calendar 2026</div>
+      <div class="card-desc">A complete schedule of major ATP tournaments, Masters 1000, and Grand Slams with dates and surfaces.</div>
+      <div class="card-arrow">
+        Read
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </div>
+    </a>
+
   </div>
 
   <div class="section-label" style="margin-top: 48px;">Gaming</div>
@@ -483,95 +413,6 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="section-label" style="margin-top: 48px;">Tennis Calendar 2026</div>
-
-  <div class="table-container">
-    <table class="premium-table">
-      <thead>
-        <tr>
-          <th>Tournament</th>
-          <th>Tier</th>
-          <th>Surface</th>
-          <th>Dates</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><a href="https://atptour.com" target="_blank">Mubadala Citi DC Open</a></td>
-          <td><span class="tier-badge tier-500">ATP 500</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>27 July – 2 August 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://nationalbankopen.com" target="_blank">National Bank Open</a></td>
-          <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>2 August – 13 August 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://atptourexperiences.com" target="_blank">Cincinnati Open</a></td>
-          <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>13 August – 23 August 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://atptour.com" target="_blank">US Open</a></td>
-          <td><span class="tier-badge tier-slam">Grand Slam</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>31 August – 13 September 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://atptour.com" target="_blank">Laver Cup</a></td>
-          <td><span class="tier-badge tier-exhibition">Team Exhibition</span></td>
-          <td>Hard (Indoor)</td>
-          <td>25 September – 27 September 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://atptour.com" target="_blank">Kinoshita Group Japan Open</a></td>
-          <td><span class="tier-badge tier-500">ATP 500</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>30 September – 6 October 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://atptour.com" target="_blank">China Open</a></td>
-          <td><span class="tier-badge tier-500">ATP 500</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>30 September – 6 October 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://rolexshanghaimasters.com" target="_blank">Rolex Shanghai Masters</a></td>
-          <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-          <td>Hard (Outdoor)</td>
-          <td>7 October – 18 October 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://espn.co.uk" target="_blank">Erste Bank Open</a></td>
-          <td><span class="tier-badge tier-500">ATP 500</span></td>
-          <td>Hard (Indoor)</td>
-          <td>23 October – 1 November 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://espn.co.uk" target="_blank">Swiss Indoors Basel</a></td>
-          <td><span class="tier-badge tier-500">ATP 500</span></td>
-          <td>Hard (Indoor)</td>
-          <td>23 October – 1 November 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://rolexparismasters.com" target="_blank">Rolex Paris Masters</a></td>
-          <td><span class="tier-badge tier-1000">Masters 1000</span></td>
-          <td>Hard (Indoor)</td>
-          <td>2 November – 8 November 2026</td>
-        </tr>
-        <tr>
-          <td><a href="https://nittoatpfinals.com" target="_blank">Nitto ATP Finals</a></td>
-          <td><span class="tier-badge tier-finale">Year-End Finale</span></td>
-          <td>Hard (Indoor)</td>
-          <td>15 November – 22 November 2026</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </main>
 
