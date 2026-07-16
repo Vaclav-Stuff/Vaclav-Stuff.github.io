@@ -366,7 +366,75 @@ const recipes = [
     ingredients:[{name:'Fresh spinach',unit:'g',base:200},{name:'Canned chopped tomatoes',unit:'g',base:150},{name:'Onion (diced)',unit:'g',base:80},{name:'Garlic (minced)',unit:'g',base:10},{name:'Fresh ginger (grated)',unit:'g',base:8},{name:'Ground cumin',unit:'g',base:2},{name:'Garam masala',unit:'g',base:2},{name:'Turmeric',unit:'g',base:1},{name:'Cream or coconut milk',unit:'ml',base:60},{name:'Olive oil',unit:'ml',base:15},{name:'Salt',unit:'g',base:3}],
     steps:['Add all ingredients except cream to the inner pot and stir.','Select Stew mode and press Start.','When done, use a hand blender to partially blend the stew to a rough purée.','Stir in cream or coconut milk and serve.'],
     tip:'Add 150 g of cubed paneer or tofu before blending for a more substantial saag paneer.' },
+
+  // ─── NEW ADDITIONS ───────────────────────────────────────
+  { id:37, mode:'rice', emoji:'🍅', title:'Arroz Rojo (Mexican Red Rice)', desc:'A vibrant, flavorful Mexican-style rice cooked in tomato and chicken broth.', time:'~40 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:345, protein:7, carbs:65, fat:8, fibre:2 },
+    ingredients:[{name:'Jasmine or long-grain rice',unit:'g',base:185},{name:'Tomato passata',unit:'ml',base:80},{name:'Chicken broth',unit:'ml',base:240},{name:'Onion (finely diced)',unit:'g',base:40},{name:'Garlic (minced)',unit:'g',base:6},{name:'Cumin',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:10},{name:'Salt',unit:'g',base:2}],
+    steps:['Rinse rice until water runs clear and drain well.','Add rice, passata, broth, onion, garlic, cumin, oil, and salt to the pot. Stir gently.','Select Rice mode and press Start.','When done, let it rest on Keep Warm for 5 min, then fluff with a fork.'],
+    tip:'Garnish with fresh coriander and a squeeze of lime for a bright finish.' },
+
+  { id:38, mode:'rice', emoji:'🍄', title:'Golden Mushroom Risotto', desc:'A rich, earthy, hands-off mushroom rice with a hint of thyme and creamy finish.', time:'~45 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:380, protein:8, carbs:62, fat:12, fibre:3 },
+    ingredients:[{name:'Short-grain rice (Arborio style)',unit:'g',base:185},{name:'Vegetable broth',unit:'ml',base:340},{name:'Sliced mushrooms (chestnut or shiitake)',unit:'g',base:150},{name:'Onion (finely diced)',unit:'g',base:40},{name:'Dried thyme',unit:'g',base:1},{name:'Butter',unit:'g',base:15},{name:'Cream (optional)',unit:'ml',base:20},{name:'Salt',unit:'g',base:2}],
+    steps:['Add rice, mushrooms, onion, thyme, butter, and salt to the pot.','Pour in the vegetable broth and stir once.','Select Rice mode and press Start.','When done, stir in the cream (if using) and a knob of extra butter for silkiness.'],
+    tip:'The short-grain rice releases starch, making it naturally creamy even without much cream.' },
+
+  { id:39, mode:'rice', emoji:'🥩', title:'Bibimbap-style Beef Rice', desc:'One-pot marinated beef and rice — savory, satisfying, and deeply aromatic.', time:'~45 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:520, protein:32, carbs:65, fat:18, fibre:2 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:185},{name:'Beef (thinly sliced sirloin/ribeye)',unit:'g',base:200},{name:'Soy sauce',unit:'ml',base:20},{name:'Sesame oil',unit:'ml',base:10},{name:'Brown sugar',unit:'g',base:5},{name:'Garlic (minced)',unit:'g',base:6},{name:'Water/broth',unit:'ml',base:280},{name:'Bean sprouts (optional)',unit:'g',base:60}],
+    steps:['Marinate beef in soy sauce, sesame oil, sugar, and garlic for 10 min.','Add rinsed rice and water to the pot. Layer the marinated beef on top.','Add bean sprouts if using. Do not stir.','Select Rice mode and press Start.','When done, mix everything thoroughly and serve with gochujang.'],
+    tip:'Slice the beef very thin (easier if partially frozen) to ensure it stays tender.' },
+
+  { id:40, mode:'quick', emoji:'🍅', title:'Viral Whole Tomato Rice', desc:'Simple, stunning, and delicious — the internet sensation that actually works.', time:'~30 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:315, protein:6, carbs:64, fat:6, fibre:3 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:185},{name:'Large ripe tomato (whole)',unit:'',base:1},{name:'Soy sauce',unit:'ml',base:10},{name:'Sesame oil',unit:'ml',base:10},{name:'Salt & black pepper',unit:'to taste',base:1},{name:'Water',unit:'ml',base:280}],
+    steps:['Rinse rice and add to pot with water, soy sauce, sesame oil, salt, and pepper.','Place the whole tomato (stem removed) in the center of the rice.','Select Quick Rice mode and press Start.','When done, use the rice paddle to smash the tomato and mix it evenly into the rice.'],
+    tip:'Add a sprinkle of spring onions and a few drops of sesame oil just before serving.' },
+
+  { id:41, mode:'quick', emoji:'🏖️', title:'Mediterranean Couscous', desc:'Light and fluffy couscous with sun-dried tomatoes and olives — done in minutes.', time:'~15 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:280, protein:8, carbs:50, fat:6, fibre:5 },
+    ingredients:[{name:'Couscous',unit:'g',base:150},{name:'Boiling water or broth',unit:'ml',base:220},{name:'Sun-dried tomatoes (chopped)',unit:'g',base:30},{name:'Black olives (pitted, halved)',unit:'g',base:30},{name:'Dried oregano',unit:'g',base:1},{name:'Olive oil',unit:'ml',base:10}],
+    steps:['Add couscous, tomatoes, olives, and oregano to the pot.','Pour in boiling broth and oil. Stir quickly.','Select Quick Rice mode (or just close lid for 10 min if your cooker allows).','Fluff with a fork as soon as the cycle ends or water is absorbed.'],
+    tip:'Couscous cooks mostly by absorption — avoid the Keep Warm cycle for too long, or it will dry out.' },
+
+  { id:42, mode:'congee', emoji:'🎃', title:'Golden Pumpkin Porridge', desc:'Naturally sweet, velvety pumpkin rice porridge — pure cold-weather comfort.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:210, protein:4, carbs:48, fat:1, fibre:4 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Pumpkin or butternut squash (diced)',unit:'g',base:200},{name:'Water',unit:'ml',base:950},{name:'Fresh ginger (sliced)',unit:'g',base:10},{name:'Honey (to serve)',unit:'ml',base:10},{name:'Salt',unit:'g',base:1}],
+    steps:['Dice pumpkin into 1 cm cubes. Add rice, pumpkin, water, ginger, and salt to the pot.','Select Congee mode and press Start.','Midway through or at the end, use the paddle to mash some of the pumpkin against the side of the pot.','Serve warm with a drizzle of honey.'],
+    tip:'Use Kabocha squash if available for a richer, starchier texture.' },
+
+  { id:43, mode:'congee', emoji:'🌽', title:'Chicken & Sweetcorn Congee', desc:'A classic Cantonese staple that is sweet, savory, and wonderfully silky.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:290, protein:18, carbs:45, fat:4, fibre:2 },
+    ingredients:[{name:'Jasmine rice',unit:'g',base:90},{name:'Water',unit:'ml',base:950},{name:'Chicken breast (finely diced)',unit:'g',base:120},{name:'Sweetcorn kernels (frozen or canned)',unit:'g',base:60},{name:'Ginger (julienned)',unit:'g',base:10},{name:'Salt',unit:'g',base:2},{name:'Sesame oil',unit:'ml',base:5}],
+    steps:['Rinse rice and add to pot with water, ginger, and salt.','Add diced chicken and sweetcorn. Stir once.','Select Congee mode and press Start.','When done, stir in sesame oil. Top with spring onions if desired.'],
+    tip:'If using frozen corn, no need to thaw — just toss it directly into the pot.' },
+
+  { id:44, mode:'stew', emoji:'🍛', title:'Japanese Beef Curry', desc:'Rich, thick, savory curry with tender beef and vegetables — better than take-out.', time:'~70 min', difficulty:'Medium', baseServings:2,
+    nutrition:{ kcal:480, protein:28, carbs:35, fat:26, fibre:4 },
+    ingredients:[{name:'Beef chuck (diced 2 cm)',unit:'g',base:200},{name:'Japanese curry roux cubes',unit:'g',base:40},{name:'Potato (diced 2 cm)',unit:'g',base:150},{name:'Carrot (sliced)',unit:'g',base:60},{name:'Onion (diced)',unit:'g',base:60},{name:'Water',unit:'ml',base:400}],
+    steps:['Add beef, potato, carrot, and onion to the pot. Pour in water.','Select Stew mode and press Start.','About 20 min before the end, open the lid and add the curry roux cubes. Stir until dissolved.','Replace lid and finish the cycle. Stir well before serving over white rice.'],
+    tip:'Break the roux cubes into smaller pieces so they melt faster and don\'t clump.' },
+
+  { id:45, mode:'stew', emoji:'🍆', title:'Ratatouille-style Veggies', desc:'Vibrant Mediterranean vegetables slow-cooked until soft, sweet, and savory.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:160, protein:4, carbs:18, fat:9, fibre:6 },
+    ingredients:[{name:'Eggplant (diced 2 cm)',unit:'g',base:150},{name:'Zucchini (sliced)',unit:'g',base:120},{name:'Canned chopped tomatoes',unit:'g',base:200},{name:'Red bell pepper (diced)',unit:'g',base:80},{name:'Garlic (minced)',unit:'g',base:8},{name:'Olive oil',unit:'ml',base:15},{name:'Dried herbs de Provence',unit:'g',base:1},{name:'Salt',unit:'g',base:3}],
+    steps:['Add all vegetables, garlic, tomatoes, oil, and herbs to the pot. Stir gently.','Select Stew mode and press Start.','The vegetables will cook in their own juices and the tomato sauce.','Serve warm or at room temperature with crusty bread.'],
+    tip:'Avoid over-stirring so the vegetables maintain some shape.' },
+
+  { id:46, mode:'stew', emoji:'🍗', title:'Honey Garlic Pulled Chicken', desc:'Tender, shreddable chicken thighs in a sweet-savory glaze — perfect for wraps or rice bowls.', time:'~70 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:410, protein:34, carbs:25, fat:18, fibre:1 },
+    ingredients:[{name:'Boneless chicken thighs',unit:'g',base:300},{name:'Honey',unit:'ml',base:30},{name:'Soy sauce',unit:'ml',base:25},{name:'Ketchup',unit:'ml',base:15},{name:'Garlic (minced)',unit:'g',base:10},{name:'Water',unit:'ml',base:100}],
+    steps:['Whisk honey, soy sauce, ketchup, and garlic together.','Add chicken thighs to the pot and pour the sauce over them.','Select Stew mode and press Start.','When done, remove chicken and shred with two forks. Toss back into the sauce.'],
+    tip:'Reduced sauce in the pot is very flavorful — pour every drop over the shredded meat.' },
+
+  { id:47, mode:'stew', emoji:'🌶️', title:'Hearty Lentil Chili', desc:'A thick, protein-packed plant-based chili that’s warming and filling.', time:'~60 min', difficulty:'Easy', baseServings:2,
+    nutrition:{ kcal:320, protein:18, carbs:48, fat:6, fibre:12 },
+    ingredients:[{name:'Red lentils',unit:'g',base:120},{name:'Canned kidney beans (drained)',unit:'g',base:150},{name:'Canned crushed tomatoes',unit:'g',base:250},{name:'Vegetable broth',unit:'ml',base:300},{name:'Onion (diced)',unit:'g',base:60},{name:'Chili powder',unit:'g',base:5},{name:'Cumin',unit:'g',base:2},{name:'Salt',unit:'g',base:3}],
+    steps:['Rinse lentils and add to pot with all other ingredients. Stir well.','Select Stew mode and press Start.','The lentils will thicken the chili as they cook.','Serve with a dollop of yogurt or a sprinkle of cheese.'],
+    tip:'Add a small square of dark chocolate while cooking for a deep, smoky undertone.' },
 ];
+
 
 function renderCards() {
   const grid = document.getElementById('grid');
